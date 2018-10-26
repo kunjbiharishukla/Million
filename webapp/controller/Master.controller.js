@@ -79,7 +79,19 @@ sap.ui.define([
 			this._findItem();
 			this.getModel("appView").setProperty("/addEnabled", true);
 		},
-
+		
+		onRefreshButton: function() {
+			if (typeof sap.hybrid !== 'undefined') {
+				sap.hybrid.refreshStore();
+			}
+		},
+		
+		onFlushButton: function() {
+			if (typeof sap.hybrid !== 'undefined') {
+				sap.hybrid.flushStore();
+			}
+		},
+		
 		/**
 		 * Event handler for the master search field. Applies current
 		 * filter value and triggers a new search. If the search field's

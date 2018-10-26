@@ -30,5 +30,9 @@
 		<semantic:addAction>
 			<semantic:AddAction id="addButton" enabled="{appView>/addEnabled}" press="onAdd"/>
 		</semantic:addAction>
+		<semantic:customFooterContent>
+			<Button text="Refresh" width="80px" id="__button1" press="onRefreshButton"/>
+			<Button text="Flush" width="70px" id="__button0" press="onFlushButton"/>
+		</semantic:customFooterContent>
 	</semantic:MasterPage>
 </mvc:View>

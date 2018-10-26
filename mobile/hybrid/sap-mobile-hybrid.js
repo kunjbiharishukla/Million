@@ -46,7 +46,58 @@ sap.hybrid = {
 
 		store.open(openStoreSuccessCallback, openStoreErrorCallback);
 	},
+	
+	refreshStore: function() {
+		console.log("Offline events: refreshStore");
+		if (!store) {
+			console.log("The store must be open before it can be refreshed");
+			return;
+		}
+		store.refresh(sap.hybrid.refreshStoreCallback, sap.hybrid.errorCallback, null, sap.hybrid.progressCallback);
+	},
 
+	refreshStoreCallback: function() {
+		console.log("Offline events: refreshStoreCallback");
+	},
+
+	flushStore: function() {
+		console.log("Offline events: flushStore");
+		if (!store) {
+			console.log("The store must be open before it can be flushed");
+			return;
+		}
+		store.flush(sap.hybrid.flushStoreCallback, sap.hybrid.errorCallback, null, sap.hybrid.progressCallback);
+	},
+
+	flushStoreCallback: function() {
+		console.log("Offline events: flushStoreCallback");
+	},
+
+	errorCallback: function(error) {
+		console.log("Offline events: errorCallback");
+		alert("An error occurred: " + JSON.stringify(error));
+	},
+
+	progressCallback: function(progressStatus) {
+		// console.log("Offline events: progressCallback");
+
+		var status = progressStatus.progressState;
+		var lead = "unknown";
+		if (status === sap.OfflineStore.ProgressState.STORE_DOWNLOADING) {
+			lead = "Downloading ";
+		} else if (status === sap.OfflineStore.ProgressState.REFRESH) {
+			lead = "Refreshing ";
+		} else if (status === sap.OfflineStore.ProgressState.FLUSH_REQUEST_QUEUE) {
+			lead = "Flushing ";
+		} else if (status === sap.OfflineStore.ProgressState.DONE) {
+			lead = "Complete ";
+		} else {
+			alert("Unknown status in progressCallback");
+		}
+		console.log(lead + "Sent: " + progressStatus.bytesSent + "  Received: " + progressStatus.bytesRecv + "   File Size: " +
+			progressStatus.fileSize );
+	},
+	
 	appLogon: function (appConfig) {
 		var context = {};
 		var url = appConfig.fioriURL;
